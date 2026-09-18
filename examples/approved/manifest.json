@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "title": "发布交付说明",
+  "blocks": [
+    {
+      "id": "body-r2",
+      "section": "正文",
+      "order": 10,
+      "source": {
+        "path": "sources/round-2.md",
+        "origin": "offline-demo:round-2"
+      },
+      "approved": true,
+      "sha256": "1285e13cbdcd55c33b80cd4232ccc4ce6c0a79bc994717e65b8befc0e4d2313b"
+    },
+    {
+      "id": "table-r4",
+      "section": "表格",
+      "order": 20,
+      "source": {
+        "path": "sources/round-4.md",
+        "origin": "offline-demo:round-4"
+      },
+      "approved": true,
+      "sha256": "6751e81ca758298843c5b6386ec129e49c24f36c89dc13d4b1a0215815df8b4f"
+    },
+    {
+      "id": "ending-r5",
+      "section": "结尾",
+      "order": 30,
+      "source": {
+        "path": "sources/round-5.md",
+        "origin": "offline-demo:round-5"
+      },
+      "approved": true,
+      "sha256": "506c95644c999c71f1b6ca06f8249f75af415068bcde112364e8ae0562021ed2"
+    },
+    {
+      "id": "ending-r7",
+      "section": "结尾",
+      "order": 30,
+      "source": {
+        "path": "sources/round-7.md",
+        "origin": "offline-demo:round-7"
+      },
+      "approved": true,
+      "sha256": "5be3366eb5c5f7ee93350a0f604ee1f697fc31a2a4f997e35bc6181ea0d14cec",
+      "replaces": "ending-r5"
+    }
+  ]
+}

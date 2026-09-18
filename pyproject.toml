@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "final-assembly"
+version = "0.2.2"
+description = "Assemble approved Markdown blocks and reconcile actual Markdown and DOCX exports"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.11"
+dependencies = ["python-docx==1.2.0", "markdown-it-py==4.0.0"]
+
+[project.scripts]
+final-assembly = "final_assembly.__main__:main"
+
+[tool.setuptools]
+packages = ["final_assembly"]

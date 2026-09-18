@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "title": "Common Markdown release fixture",
+  "blocks": [
+    {
+      "id": "approved",
+      "section": "Release",
+      "order": 0,
+      "source": {
+        "path": "approved.md",
+        "origin": "offline-release-demo"
+      },
+      "approved": true,
+      "sha256": "65db71b87d3a4ef639f5a5487f5ce50b82eb7ed7c7f96a6aaad1066bd037738f"
+    }
+  ]
+}

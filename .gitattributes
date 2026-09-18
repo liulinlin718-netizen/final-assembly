@@ -1,0 +1,4 @@
+* text=auto eol=lf
+# Approved fixture bytes are hashed in their manifests.
+examples/approved/sources/*.md -text
+examples/common-markdown/approved.md -text

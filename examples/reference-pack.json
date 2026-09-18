@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1",
+  "packId": "u14-offline-reference-demo",
+  "createdAt": "2026-09-17T00:00:00Z",
+  "excerpts": [
+    {
+      "id": "body-r2",
+      "sourceThreadId": "offline-demo",
+      "sourceTurnId": "2",
+      "sourceKind": "imported-transcript",
+      "role": "assistant",
+      "exactText": "# 发布交付说明\n\n本次交付采用已批准的正文、验收表格和新版结尾。预算为 48 万元，发布范围保持不变。\n\n详细记录见[项目记录](https://example.com/release?version=2&lang=zh)。\n\n- 保留已批准的事实与数字。\n- 每次导出都从真实文件回读。\n\n1. 核对来源与批准状态。\n2. 按清单顺序装配。\n",
+      "sourceHash": "1285e13cbdcd55c33b80cd4232ccc4ce6c0a79bc994717e65b8befc0e4d2313b",
+      "selectionOrder": 1
+    }
+  ],
+  "memory": []
+}

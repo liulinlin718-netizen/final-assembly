@@ -1,0 +1,26 @@
+# Generated workspaces, outputs, dependencies, and credentials
+.runtime/
+.briefback/
+exports/
+dist/
+build/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+auth.json
+credentials*.json
+*.pem
+*.key
+*.p12
+*.sqlite*
+*.db
+*.log
+node_modules/
+.codex/
+.DS_Store
+Thumbs.db
