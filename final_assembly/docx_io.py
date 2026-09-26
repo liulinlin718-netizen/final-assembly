@@ -192,11 +192,15 @@ def write_docx(blocks: list[dict], path: Path) -> None:
                     margin.set(qn("w:type"), "dxa")
                     margins.append(margin)
                 props.append(margins)
-                for row_index, row in enumerate(rows):
+                for row_index, (row, docx_row) in enumerate(zip(rows, table.rows, strict=True)):
                     if row_index == 0:
-                        table.rows[0]._tr.get_or_add_trPr().append(OxmlElement("w:tblHeader"))
+                        docx_row._tr.get_or_add_trPr().append(OxmlElement("w:tblHeader"))
+                    # Table.cell() reconstructs the complete table grid on every
+                    # access. This writer creates rectangular, unmerged rows, so
+                    # materialize each row's cell proxies once and reuse them.
+                    row_cells = tuple(docx_row.cells)
                     for col_index, spans in enumerate(row):
-                        cell = table.cell(row_index, col_index)
+                        cell = row_cells[col_index]
                         cell.width = widths[col_index]
                         cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
                         paragraph = cell.paragraphs[0]
@@ -414,6 +418,9 @@ def _read_table(table, relationships, used_links, location):
     for row_index, row in enumerate(table.findall(_w("tr")), 1):
         row_location = f"{location}.rows[{row_index}]"
         _children(row, {"trPr", "tc"}, row_location, repeats={"tc"})
+        row_cells = row.findall(_w("tc"))
+        if len(row_cells) != len(grid):
+            _fail(f"Table row has {len(row_cells)} cells; expected {len(grid)}", row_location, "DOCX_TABLE_INVALID")
         row_props = row.find(_w("trPr"))
         _leaf_properties(row_props, {"tblHeader", "cantSplit"}, row_location)
         header = None if row_props is None else row_props.find(_w("tblHeader"))
@@ -421,7 +428,7 @@ def _read_table(table, relationships, used_links, location):
         if is_header != (row_index == 1):
             _fail("Only the first table row must be marked as its header", row_location, "DOCX_TABLE_INVALID")
         cells = []
-        for column, cell in enumerate(row.findall(_w("tc")), 1):
+        for column, cell in enumerate(row_cells, 1):
             cell_location = f"{row_location}.cells[{column}]"
             _children(cell, {"tcPr", "p"}, cell_location)
             _leaf_properties(cell.find(_w("tcPr")), {"tcW", "vAlign", "shd"}, cell_location)
@@ -437,8 +444,6 @@ def _read_table(table, relationships, used_links, location):
                 alignment.append(align)
             elif align != alignment[column - 1]:
                 _fail("Table column alignment changed between rows", cell_location, "DOCX_TABLE_INVALID")
-        if len(cells) != len(grid):
-            _fail(f"Table row has {len(cells)} cells; expected {len(grid)}", row_location, "DOCX_TABLE_INVALID")
         rows.append(cells)
     if not rows:
         _fail("Table has no rows", location, "DOCX_TABLE_INVALID")

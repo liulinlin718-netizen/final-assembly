@@ -19,7 +19,7 @@ def archive(path, entries):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--out-dir", default="dist/0.2.2")
+    parser.add_argument("--out-dir", default="dist/0.3.0")
     args = parser.parse_args()
     output = Path(args.out_dir).resolve()
     if not output.is_relative_to(ROOT):
@@ -30,14 +30,14 @@ def main():
         for path in (ROOT / directory).rglob(pattern):
             if path.is_file() and "__pycache__" not in path.parts:
                 files[path.relative_to(ROOT).as_posix()] = path
-    for name in ("README.md", "LICENSE", "requirements.txt", "pyproject.toml", "scripts/run.ps1", "scripts/demo.py", "scripts/demo.ps1", "scripts/validate.py", "scripts/package.py", "examples/reference-pack.json", "skills/final-assembly/SKILL.md", "skills/final-assembly/scripts/run.py", "skills/final-assembly/references/manifest.md"):
+    for name in ("README.md", "README.zh-CN.md", "docs/images/document.png", "docs/demo-result.json", "LICENSE", "requirements.txt", "pyproject.toml", "scripts/run.ps1", "scripts/demo.py", "scripts/demo.ps1", "scripts/validate.py", "scripts/package.py", "examples/reference-pack.json", "skills/final-assembly/SKILL.md", "skills/final-assembly/scripts/run.py", "skills/final-assembly/references/manifest.md"):
         files[name] = ROOT / name
     skill = {name.removeprefix("skills/"): source for name, source in files.items() if name.startswith("skills/")}
     skill["final-assembly/requirements.txt"] = ROOT / "requirements.txt"
     skill["final-assembly/LICENSE"] = ROOT / "LICENSE"
     for source in (ROOT / "final_assembly").glob("*.py"):
         skill["final-assembly/scripts/final_assembly/" + source.name] = source
-    results = [archive(output / "final-assembly-0.2.2-source.zip", files), archive(output / "final-assembly-0.2.2-skill.zip", skill)]
+    results = [archive(output / "final-assembly-0.3.0-source.zip", files), archive(output / "final-assembly-0.3.0-skill.zip", skill)]
     print(json.dumps({"artifacts": results}, indent=2))
 
 

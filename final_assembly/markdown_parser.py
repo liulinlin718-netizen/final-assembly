@@ -13,6 +13,7 @@ def fail(message, token=None):
 
 def inline(token):
     spans, flags, depths = [], {}, {}
+    link_has_content = None
     styles = {"strong": "bold", "em": "italic", "s": "strike"}
     for child in token.children or []:
         kind = child.type
@@ -37,12 +38,18 @@ def inline(token):
             if not valid or child.attrGet("title"):
                 fail("Use absolute HTTP(S) or mailto links without a title; local/anchor links need an explicit portable destination.", token)
             flags["url"] = url
+            link_has_content = False
         elif kind == "link_close":
+            if not link_has_content:
+                fail("Links must have a nonempty label; empty labels cannot be preserved in the DOCX profile.", token)
             flags.pop("url", None)
+            link_has_content = None
         elif kind in {"text", "code_inline", "softbreak", "hardbreak"}:
             value = " " if kind == "softbreak" else "\n" if kind == "hardbreak" else child.content
             formatting = {**flags, **({"code": True} if kind == "code_inline" else {})}
             if value:
+                if link_has_content is not None:
+                    link_has_content = True
                 if spans and {k: v for k, v in spans[-1].items() if k != "text"} == formatting:
                     spans[-1]["text"] += value
                 else:

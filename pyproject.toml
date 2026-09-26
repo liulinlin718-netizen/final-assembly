@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "final-assembly"
-version = "0.2.2"
+version = "0.3.0"
 description = "Assemble approved Markdown blocks and reconcile actual Markdown and DOCX exports"
 readme = "README.md"
 license = {file = "LICENSE"}

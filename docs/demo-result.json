@@ -1,0 +1,8 @@
+{
+  "kind": "actual-docx-render",
+  "source": "examples/common-markdown",
+  "renderer": "Microsoft Word 16.0 PDF export, page rasterized at 144 DPI",
+  "docxSha256": "333d1952de3b764a6f390aa64b00b18c65a835dc25cc524bf91124e9ff7c13bf",
+  "image": "docs/images/document.png",
+  "scope": "One synthetic example; pagination may vary across rendering environments."
+}
